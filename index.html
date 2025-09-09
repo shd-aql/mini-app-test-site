@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebView Bridge Test</title>
+    <title>PickMe Super App Test Site</title>
     <style>
         * {
             margin: 0;
@@ -12,142 +12,244 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: white;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 400px;
+            max-width: 420px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(249, 212, 118, 0.3);
+            position: relative;
             overflow: hidden;
         }
 
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(249, 212, 118, 0.1), rgba(249, 212, 118, 0.05));
+            z-index: 1;
+        }
+
         .header {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
-            padding: 30px 20px;
+            background: linear-gradient(135deg, #f9d476 0%, #f5c842 100%);
+            color: #000;
+            padding: 40px 20px 30px;
             text-align: center;
+            position: relative;
+            z-index: 2;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #000;
+            border-radius: 2px;
         }
 
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .status {
-            font-size: 14px;
-            opacity: 0.9;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 15px;
+            display: inline-block;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .content {
-            padding: 30px 20px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .section {
-            margin-bottom: 30px;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(249, 212, 118, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f9d476, #f5c842);
         }
 
         .section-title {
             font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
+            letter-spacing: -0.3px;
         }
 
-        .icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
+        .section-title .emoji {
+            font-size: 22px;
+            margin-right: 12px;
         }
 
         .button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            padding: 16px;
+            background: linear-gradient(135deg, #f9d476 0%, #f5c842 100%);
+            color: #000;
             border: none;
             border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(249, 212, 118, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .button:hover::before {
+            left: 100%;
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(249, 212, 118, 0.5);
         }
 
         .button:active {
             transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(249, 212, 118, 0.3);
         }
 
         .button.secondary {
-            background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
-            box-shadow: 0 4px 15px rgba(168, 230, 207, 0.3);
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .button.danger {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        .button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .button.outline {
+            background: transparent;
+            color: #000;
+            border: 2px solid #f9d476;
+            box-shadow: none;
+        }
+
+        .button.outline:hover {
+            background: #f9d476;
+            box-shadow: 0 4px 15px rgba(249, 212, 118, 0.3);
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .input-group input,
         .input-group select {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             border: 2px solid #e1e8ed;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            color: #000;
         }
 
         .input-group input:focus,
         .input-group select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #f9d476;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(249, 212, 118, 0.1);
         }
 
         .result {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #667eea;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            border-left: 4px solid #f9d476;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-size: 13px;
             white-space: pre-wrap;
             word-break: break-word;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .result.error {
-            background: #fff5f5;
+            background: linear-gradient(135deg, #fff5f5, #ffffff);
             border-left-color: #e53e3e;
             color: #c53030;
         }
 
         .result.success {
-            background: #f0fff4;
+            background: linear-gradient(135deg, #f0fff4, #ffffff);
             border-left-color: #38a169;
             color: #2f855a;
         }
@@ -155,26 +257,93 @@
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(249, 212, 118, 0.1), rgba(249, 212, 118, 0.05));
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            right: -30px;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            bottom: 20%;
+            left: -40px;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .status.connected {
+            background: rgba(56, 161, 105, 0.1);
+            color: #2f855a;
+            border: 1px solid rgba(56, 161, 105, 0.2);
+        }
+
+        .status.demo {
+            background: rgba(251, 191, 36, 0.1);
+            color: #d69e2e;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        #results {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #results::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #results::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        #results::-webkit-scrollbar-thumb {
+            background: #f9d476;
+            border-radius: 3px;
         }
 
         @media (max-width: 480px) {
             .container {
                 margin: 0;
                 border-radius: 0;
-                min-height: 100vh;
+                max-width: 100%;
             }
             
-            body {
-                padding: 0;
+            .content {
+                padding: 16px;
+            }
+            
+            .section {
+                padding: 20px;
+                margin-bottom: 12px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        
         <div class="header">
-            <h1>WebView Bridge</h1>
+            <h1>PickMe Super App</h1>
+            <div class="subtitle">Test Environment</div>
             <div class="status" id="status">Initializing...</div>
         </div>
 
@@ -182,7 +351,8 @@
             <!-- Payment Section -->
             <div class="section">
                 <div class="section-title">
-                    💳 Payment Testing
+                    <span class="emoji">💳</span>
+                    Payment Gateway
                 </div>
                 <div class="input-group">
                     <label>Amount</label>
@@ -191,64 +361,67 @@
                 <div class="input-group">
                     <label>Currency</label>
                     <select id="currency">
-                        <option value="USD">LKR</option>
-                        <option value="EUR">NPR</option>
-                        <option value="GBP">USD</option>
+                        <option value="LKR">LKR - Sri Lankan Rupee</option>
+                        <option value="NPR">NPR - Nepalese Rupee</option>
+                        <option value="USD">USD - US Dollar</option>
                     </select>
                 </div>
                 <div class="input-group">
                     <label>Description</label>
-                    <input type="text" id="description" value="Test payment">
+                    <input type="text" id="description" value="PickMe Service Payment">
                 </div>
-                <button class="button" onclick="testPickmePayment()">Process PickMe Payment</button>
-                <button class="button" onclick="testPayment()">Process Payment</button>
+                <button class="button" onclick="testPickmePayment()">PickMe Payment Gateway</button>
+                <button class="button outline" onclick="testPayment()">Standard Payment</button>
             </div>
 
             <!-- Auth Section -->
             <div class="section">
                 <div class="section-title">
-                    🔐 Authentication
+                    <span class="emoji">🔐</span>
+                    User Authentication
                 </div>
                 <div class="input-group">
                     <label>Username</label>
-                    <input type="text" id="username" value="testuser">
+                    <input type="text" id="username" value="pickmeuser">
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="password" value="password123">
+                    <input type="password" id="password" value="pickme123">
                 </div>
                 <div class="grid">
-                    <button class="button secondary" onclick="testLogin()">Login</button>
-                    <button class="button secondary" onclick="testLogout()">Logout</button>
+                    <button class="button secondary" onclick="testLogin()">Sign In</button>
+                    <button class="button secondary" onclick="testLogout()">Sign Out</button>
                 </div>
             </div>
 
             <!-- Share Section -->
             <div class="section">
                 <div class="section-title">
-                    📤 Share Content
+                    <span class="emoji">📤</span>
+                    Social Sharing
                 </div>
                 <div class="input-group">
-                    <label>Share Text</label>
-                    <input type="text" id="shareText" value="Check out this awesome app!">
+                    <label>Share Message</label>
+                    <input type="text" id="shareText" value="Experience the best with PickMe Super App! 🚗✨">
                 </div>
                 <div class="input-group">
-                    <label>URL to Share</label>
-                    <input type="url" id="shareUrl" value="https://example.com">
+                    <label>Share URL</label>
+                    <input type="url" id="shareUrl" value="https://pickme.lk">
                 </div>
                 <div class="grid">
                     <button class="button secondary" onclick="shareText()">Share Text</button>
-                    <button class="button secondary" onclick="shareUrl()">Share URL</button>
+                    <button class="button secondary" onclick="shareUrl()">Share Link</button>
                 </div>
             </div>
 
             <!-- Camera Section -->
             <div class="section">
                 <div class="section-title">
-                    📸 Camera & Scanner
+                    <span class="emoji">📸</span>
+                    Camera & Scanner
                 </div>
                 <div class="grid">
-                    <button class="button secondary" onclick="takePhoto()">Take Photo</button>
+                    <button class="button secondary" onclick="takePhoto()">Capture Photo</button>
                     <button class="button secondary" onclick="scanQR()">Scan QR Code</button>
                 </div>
             </div>
@@ -256,28 +429,30 @@
             <!-- Storage Section -->
             <div class="section">
                 <div class="section-title">
-                    💾 Storage
+                    <span class="emoji">💾</span>
+                    Local Storage
                 </div>
                 <div class="input-group">
-                    <label>Key</label>
-                    <input type="text" id="storageKey" value="test_key">
+                    <label>Storage Key</label>
+                    <input type="text" id="storageKey" value="pickme_user_data">
                 </div>
                 <div class="input-group">
-                    <label>Value</label>
-                    <input type="text" id="storageValue" value="Hello World!">
+                    <label>Storage Value</label>
+                    <input type="text" id="storageValue" value="Welcome to PickMe!">
                 </div>
                 <div class="grid">
-                    <button class="button secondary" onclick="setStorage()">Set Value</button>
-                    <button class="button secondary" onclick="getStorage()">Get Value</button>
+                    <button class="button secondary" onclick="setStorage()">Save Data</button>
+                    <button class="button secondary" onclick="getStorage()">Load Data</button>
                 </div>
             </div>
 
             <!-- Device Info -->
             <div class="section">
                 <div class="section-title">
-                    📱 Device Info
+                    <span class="emoji">📱</span>
+                    Device Information
                 </div>
-                <button class="button secondary" onclick="getDeviceInfo()">Get Device Info</button>
+                <button class="button secondary" onclick="getDeviceInfo()">Get Device Details</button>
             </div>
 
             <!-- Results -->
@@ -285,9 +460,8 @@
         </div>
     </div>
 
-    <!-- Include the SDK -->
     <script>
-        // Include the WebView Bridge SDK directly in the HTML
+        // WebView Bridge SDK
         class WebViewBridge {
           constructor(config) {
             this.config = {
@@ -330,15 +504,12 @@
               }
             });
 
-            // Handle responses from native app
             window.bridgeEventReceiver = (eventData) => {
               try {
                 const response = JSON.parse(eventData);
-                // Check if this is a response to a pending request
                 if (response.id && this.messageHandlers.has(response.id)) {
                   this.handleNativeResponse(response);
                 } else {
-                  // This is an event, not a response
                   this.emitEvent(response.type, response.payload);
                 }
               } catch (error) {
@@ -411,10 +582,10 @@
             try {
               const response = await this.sendToNative(message);
               window.postMessage({
-              type: 'navigation',
-              action: 'showPaymentSuccess', 
-              payload: { transactionId: '123', amount: 50.0 }
-            });
+                type: 'navigation',
+                action: 'showPaymentSuccess', 
+                payload: { transactionId: 'PME' + Date.now(), amount: paymentRequest.amount }
+              });
               return response.data || { success: false, error: 'No response data' };
             } catch (error) {
               return { success: false, error: error.message || 'Payment failed' };
@@ -433,10 +604,10 @@
             try {
               const response = await this.sendToNative(message);
               window.postMessage({
-              type: 'navigation',
-              action: 'showPaymentSuccess', 
-              payload: { transactionId: '123', amount: 50.0 }
-            });
+                type: 'navigation',
+                action: 'showPaymentSuccess', 
+                payload: { transactionId: 'TXN' + Date.now(), amount: paymentRequest.amount }
+              });
               return response.data || { success: false, error: 'No response data' };
             } catch (error) {
               return { success: false, error: error.message || 'Payment failed' };
@@ -564,18 +735,18 @@
 
         function initBridge() {
             bridge = new WebViewBridge({
-                appName: 'TestApp',
-                version: '1.0.0',
+                appName: 'PickMe Super App',
+                version: '2.0.0',
                 debug: true
             });
 
             const statusEl = document.getElementById('status');
             if (bridge.isNativeEnvironment()) {
-                statusEl.textContent = 'Connected to Native App';
-                statusEl.style.color = '#4ade80';
+                statusEl.textContent = '✓ Native App Connected';
+                statusEl.className = 'status connected';
             } else {
-                statusEl.textContent = 'Running in Browser (Demo Mode)';
-                statusEl.style.color = '#fbbf24';
+                statusEl.textContent = '⚠ Browser Demo Mode';
+                statusEl.className = 'status demo';
             }
         }
 
@@ -588,12 +759,17 @@
             resultsDiv.appendChild(resultDiv);
             resultsDiv.scrollTop = resultsDiv.scrollHeight;
             
-            // Auto-remove after 10 seconds
             setTimeout(() => {
                 if (resultDiv.parentNode) {
-                    resultDiv.parentNode.removeChild(resultDiv);
+                    resultDiv.style.opacity = '0';
+                    resultDiv.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        if (resultDiv.parentNode) {
+                            resultDiv.parentNode.removeChild(resultDiv);
+                        }
+                    }, 300);
                 }
-            }, 10000);
+            }, 8000);
         }
 
         // Test Functions
@@ -625,7 +801,7 @@
                     amount,
                     currency,
                     description,
-                    paymentMethod: 'card'
+                    paymentMethod: 'pickme_wallet'
                 });
                 showResult(result, !result.success);
             } catch (error) {
@@ -666,9 +842,9 @@
                 const result = await bridge.shareContent({
                     type: 'text',
                     content: text,
-                    title: 'Shared from WebView'
+                    title: 'Shared from PickMe'
                 });
-                showResult({ success: result, message: 'Share completed' }, !result);
+                showResult({ success: result, message: 'Content shared successfully' }, !result);
             } catch (error) {
                 showResult({ error: error.message }, true);
             }
@@ -681,10 +857,10 @@
                 const result = await bridge.shareContent({
                     type: 'url',
                     content: url,
-                    title: 'Check this out!',
-                    description: 'Shared from WebView Bridge'
+                    title: 'Check out PickMe Super App!',
+                    description: 'Your everyday super app'
                 });
-                showResult({ success: result, message: 'URL shared' }, !result);
+                showResult({ success: result, message: 'URL shared successfully' }, !result);
             } catch (error) {
                 showResult({ error: error.message }, true);
             }
@@ -694,7 +870,7 @@
             try {
                 const result = await bridge.captureMedia({
                     type: 'photo',
-                    quality: 'medium',
+                    quality: 'high',
                     allowEdit: true
                 });
                 showResult({ photo: result ? 'Photo captured successfully' : 'Failed to capture photo' }, !result);
@@ -721,7 +897,7 @@
 
             try {
                 const result = await bridge.setStorage(key, value);
-                showResult({ success: result, message: `Stored ${key}: ${value}` }, !result);
+                showResult({ success: result, message: `Data saved: ${key} = ${value}` }, !result);
             } catch (error) {
                 showResult({ error: error.message }, true);
             }
@@ -732,7 +908,7 @@
 
             try {
                 const result = await bridge.getStorage(key);
-                showResult({ key, value: result }, result === null);
+                showResult({ key, value: result, found: result !== null }, result === null);
             } catch (error) {
                 showResult({ error: error.message }, true);
             }
@@ -741,7 +917,7 @@
         async function getDeviceInfo() {
             try {
                 const result = await bridge.getDeviceInfo();
-                showResult(result || { message: 'No device info available' }, !result);
+                showResult(result || { message: 'No device info available in demo mode' }, !result);
             } catch (error) {
                 showResult({ error: error.message }, true);
             }
